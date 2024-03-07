@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Assignment2.Views.AudioRecordingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="recordingPage"
+    Title="{Binding Title}">
+
+    <Grid>
+        <ScrollView>
+            <StackLayout
+                Padding="30,24,30,24"
+                BindableLayout.ItemsSource="{Binding RecordedFiles, Mode=TwoWay}"
+                VerticalOptions="StartAndExpand">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label Text="{Binding .}" TextColor="Black" />
+                            <BoxView
+                                Grid.Row="1"
+                                BackgroundColor="LightGray"
+                                HeightRequest="1" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
