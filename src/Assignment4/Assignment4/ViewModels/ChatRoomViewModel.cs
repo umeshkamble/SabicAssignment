@@ -67,9 +67,17 @@ namespace Assignment4.ViewModels
         #region Commands
         async Task ExecuteSendChat()
         {
-            await connection.InvokeCoreAsync("SendMessage", args: new[] { ChatMessage });
+            try
+            {
+                await connection.InvokeCoreAsync("SendMessage", args: new[] { ChatMessage });
 
-            ChatMessage = String.Empty;
+                ChatMessage = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+           
         }
         #endregion
     }
