@@ -1,4 +1,5 @@
-﻿using Assignment3.ViewModels;
+﻿using Assignment3.Helpers;
+using Assignment3.ViewModels;
 using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms;
@@ -11,6 +12,9 @@ namespace Assignment3.Views
         {
             InitializeComponent();
             BindingContext = new PreviewFormViewModel();
+            if (AppConstants.IsEnglishLang)
+                FlowDirection = FlowDirection.LeftToRight;
+            else FlowDirection = FlowDirection.RightToLeft;
             BuildPreviewForm();
         }
 
@@ -26,7 +30,7 @@ namespace Assignment3.Views
 
                     var title = new Label
                     {
-                        Text = form.LabelEnglish
+                        Text = AppConstants.IsEnglishLang? form.LabelEnglish: form.LabelArabic,
                     };
                     if (form.IsMandatory)
                     {
@@ -52,18 +56,18 @@ namespace Assignment3.Views
 
                         var txtEntry = new Entry
                         {
-                            Placeholder = form.LabelEnglish,
-                            MaxLength=form.MaxSizeEn
-                            
+                            Placeholder = AppConstants.IsEnglishLang ? form.LabelEnglish : form.LabelArabic,
+                            MaxLength = AppConstants.IsEnglishLang ? form.MaxSizeEn: form.MaxSizeAr,
+
                         };
                         content.Children.Add(txtEntry);
                         break;
                     case "editor":
                         var txtEditor = new Editor
                         {
-                            Placeholder = form.LabelEnglish,
+                            Placeholder = AppConstants.IsEnglishLang ? form.LabelEnglish : form.LabelArabic,
                             HeightRequest = 100,
-                            MaxLength= form.MaxSizeEn
+                            MaxLength = AppConstants.IsEnglishLang ? form.MaxSizeEn : form.MaxSizeAr
                         };
                         content.Children.Add(txtEditor);
                         break;
@@ -86,7 +90,7 @@ namespace Assignment3.Views
 
                         var button = new Button
                         {
-                            Text = form.LabelEnglish
+                            Text = AppConstants.IsEnglishLang ? form.LabelEnglish : form.LabelArabic
                         };
                         content.Children.Add(button);
                         break;

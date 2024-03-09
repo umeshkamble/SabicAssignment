@@ -1,8 +1,11 @@
-﻿using Assignment3.Models;
+﻿using Assignment3.Helpers;
+using Assignment3.Models;
 using Assignment3.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -28,7 +31,7 @@ namespace Assignment3.ViewModels
         public ConfigurationListViewModel()
         {
             Title = "Configuration Form List";
-            PreviewFormCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(PreviewFormPage)));
+            PreviewFormCommand = new Command(async () => await NavigateToPreview());
             AddItemCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(ConfigurationPage)));
             EditFormCommand = new Command<FormFields>((item) => OnItemSelected(item, "edit"));
             DeleteFormCommand = new Command<FormFields>((item) => OnItemSelected(item, "delete"));
@@ -46,6 +49,23 @@ namespace Assignment3.ViewModels
             FormFieldList = new ObservableCollection<FormFields>(formFields);
         }
         
+        private async Task NavigateToPreview()
+        {
+            bool isEnglish = await Shell.Current.DisplayAlert("Alert", "Do you want to deleted control", "English", "Arabic");
+            if (isEnglish)
+            {
+                CultureInfo language = new CultureInfo("en");
+                Thread.CurrentThread.CurrentUICulture = language;
+                AppConstants.IsEnglishLang = true;
+            }
+            else
+            {
+                CultureInfo language = new CultureInfo("ar");
+                Thread.CurrentThread.CurrentUICulture = language;
+                AppConstants.IsEnglishLang = false;
+            }
+            await Shell.Current.GoToAsync(nameof(PreviewFormPage));
+        }
         async void OnItemSelected(FormFields item, string operation)
         {
             if (item == null)
