@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Assignment3.Views.ConfigurationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Assignment3.ViewModels"
+    Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="Title" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Padding="10" RowDefinitions="*,Auto">
+        <ScrollView>
+
+
+            <Grid
+                Margin="4"
+                RowDefinitions="Auto,Auto,Auto,Auto,*"
+                VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <Label Style="{StaticResource Title}" Text="Control Type" />
+                    <Picker
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding ControlsList}"
+                        SelectedItem="{Binding SelectedControl, Mode=TwoWay}" />
+                </StackLayout>
+                <StackLayout Grid.Column="1">
+                    <Label Style="{StaticResource Title}" Text="Grid Columns" />
+                    <Picker />
+                </StackLayout>
+                <StackLayout Grid.Row="1" Grid.ColumnSpan="2">
+                    <Label Style="{StaticResource Title}" Text="Label English" />
+                    <Entry Text="{Binding FormField.LabelEnglish, Mode=TwoWay}" />
+                </StackLayout>
+                <StackLayout Grid.Row="2">
+                    <Label Style="{StaticResource Title}" Text="Validation Expression English" />
+                    <Picker />
+                </StackLayout>
+                <StackLayout Grid.Row="2" Grid.Column="1">
+                    <Label Style="{StaticResource Title}" Text="Max Size English" />
+                    <Entry Keyboard="Numeric" Text="{Binding FormField.MaxSizeEn, Mode=TwoWay}" />
+                </StackLayout>
+                <StackLayout Grid.Row="3" Grid.ColumnSpan="2">
+                    <Label Style="{StaticResource Title}" Text="Label Arabic" />
+                    <Entry Text="{Binding FormField.LabelArabic, Mode=TwoWay}" />
+                </StackLayout>
+                <Grid Grid.Row="4">
+                    <FlexLayout
+                        AlignContent="Start"
+                        AlignItems="Start"
+                        Direction="Row"
+                        JustifyContent="SpaceBetween"
+                        Wrap="Wrap">
+                        <StackLayout>
+                            <Label Style="{StaticResource Title}" Text="Validation Expression Arabic" />
+                            <Picker />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Style="{StaticResource Title}" Text="Max Size Arabic" />
+                            <Entry Keyboard="Numeric" Text="{Binding FormField.MaxSizeAr, Mode=TwoWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Style="{StaticResource Title}" Text="Display Order" />
+                            <Entry Keyboard="Numeric" Text="{Binding FormField.DisplayOrder, Mode=TwoWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Style="{StaticResource Title}" Text="Mandatory" />
+                            <CheckBox IsChecked="{Binding FormField.IsMandatory, Mode=TwoWay}" />
+                        </StackLayout>
+                    </FlexLayout>
+                </Grid>
+            </Grid>
+        </ScrollView>
+
+        <StackLayout
+            Grid.Row="1"
+            HorizontalOptions="End"
+            Orientation="Horizontal">
+            <Button
+                BackgroundColor="OrangeRed"
+                Command="{Binding CancelCommand}"
+                Text="Close" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding SaveCommand}"
+                Text="Save" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

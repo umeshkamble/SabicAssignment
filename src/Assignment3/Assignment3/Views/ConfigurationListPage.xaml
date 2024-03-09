@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Assignment3.Views.ConfigurationListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:local="clr-namespace:Assignment3.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="BrowseItemsPage"
+    Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ListIsNotNullOrEmptyConverter x:Key="ListIsNotNullOrEmptyConverter" />
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+            <Style x:Key="ListHeader" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Padding="10" RowDefinitions="*,Auto">
+        <StackLayout Spacing="10">
+            <Grid
+                ColumnDefinitions="50,40,*,*,*,*"
+                HeightRequest="60"
+                IsVisible="{Binding FormFieldList, Converter={StaticResource ListIsNotNullOrEmptyConverter}}">
+                <Label Style="{StaticResource ListHeader}" Text="Delete" />
+                <Label
+                    Grid.Column="1"
+                    Style="{StaticResource ListHeader}"
+                    Text="Edit" />
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource ListHeader}"
+                    Text="Control Type" />
+                <Label
+                    Grid.Column="3"
+                    LineBreakMode="WordWrap"
+                    Style="{StaticResource ListHeader}"
+                    Text="Label English" />
+                <Label
+                    Grid.Column="4"
+                    Style="{StaticResource ListHeader}"
+                    Text="Label Arabic" />
+                <Label
+                    Grid.Column="5"
+                    Style="{StaticResource ListHeader}"
+                    Text="Is Compulsory" />
+            </Grid>
+            <CollectionView ItemsSource="{Binding FormFieldList, Mode=TwoWay}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Grid HorizontalOptions="Center" VerticalOptions="FillAndExpand">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="Please add control form data"
+                            VerticalOptions="Center" />
+
+                    </Grid>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,10" ColumnDefinitions="50,40,*,*,*,*">
+                            <ffimageloadingsvg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="resource://Assignment3.Resources.delete.svg"
+                                WidthRequest="20">
+                                <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ConfigurationListViewModel}}, Path=DeleteFormCommand}"
+                                        CommandParameter="{Binding .}"
+                                        NumberOfTapsRequired="1" />
+                                </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            </ffimageloadingsvg:SvgCachedImage>
+                            <ffimageloadingsvg:SvgCachedImage
+                                Grid.Column="1"
+                                HeightRequest="20"
+                                Source="resource://Assignment3.Resources.edit.svg"
+                                WidthRequest="20">
+                                <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ConfigurationListViewModel}}, Path=EditFormCommand}"
+                                        CommandParameter="{Binding .}"
+                                        NumberOfTapsRequired="1" />
+                                </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                            </ffimageloadingsvg:SvgCachedImage>
+                            <Label
+                                Grid.Column="2"
+                                FontSize="14"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding ControlType}" />
+                            <Label
+                                Grid.Column="3"
+                                FontSize="14"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding LabelEnglish}" />
+                            <Label
+                                Grid.Column="4"
+                                FontSize="14"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding LabelArabic}" />
+                            <Label
+                                Grid.Column="5"
+                                FontSize="14"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding IsMandatory}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <Button Command="{Binding AddItemCommand}" Text="Add" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding PreviewFormCommand}"
+                IsEnabled="{Binding FormFieldList, Converter={StaticResource ListIsNotNullOrEmptyConverter}}"
+                Text="Preview" />
+        </Grid>
+    </Grid>
+</ContentPage>
