@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Assignment1.Views.RitchTextPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:Assignment1.Controls"
+    xmlns:vm="clr-namespace:Assignment1.ViewModels"
+    Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:RitchTextViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+
+            <Style x:Key="Title" TargetType="Label">
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BorderColor" Value="LightGray" />
+            </Style>
+            <Style x:Key="RitchTextButton" TargetType="Button">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderColor" Value="LightGray" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="WidthRequest" Value="50" />
+                <Setter Property="HeightRequest" Value="40" />
+
+            </Style>
+            <Style TargetType="BoxView">
+                <Setter Property="WidthRequest" Value="1" />
+                <Setter Property="BackgroundColor" Value="LightGray" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <StackLayout
+                Padding="30,24,30,24"
+                Orientation="Vertical"
+                Spacing="10">
+                <Label Style="{StaticResource Title}" Text="Description" />
+                <Grid HeightRequest="300" HorizontalOptions="FillAndExpand">
+                    <WebView
+                        x:Name="webView"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" />
+                </Grid>
+
+
+                <Button
+                    Margin="0,10,0,0"
+                    BackgroundColor="{StaticResource Primary}"
+                    Clicked="Button_Clicked"
+                    Text="Get RitchText Data"
+                    TextColor="White" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
